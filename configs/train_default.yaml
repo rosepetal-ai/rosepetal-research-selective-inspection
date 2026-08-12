@@ -1,0 +1,35 @@
+# Paper training recipe for the weak scout (method id: scout_image_bce).
+#
+# This is the exact configuration used for the paper's primary weak-scout
+# runs (MVTec-AD label pools): ImageNet-pretrained ResNet-18 @ 256x256,
+# 1500 steps, batch size 16, AdamW lr 1e-4 / weight decay 1e-4, gradient
+# clip 1.0, seed 1337. Image-level BCE is the only supervision.
+#
+# Point the manifests at your own JSONL files (see README.md "Data").
+
+model:
+  backbone: resnet18        # any timm model name; the paper uses resnet18
+  pretrained: true          # ImageNet initialization
+  image_size: 256           # square letterbox input side
+  feature_dim: 256          # transformer model dim
+  num_queries: 100          # DETR-lite learnable queries
+  num_heads: 8
+  num_encoder_layers: 2
+  num_decoder_layers: 2
+  multi_scale: true         # backbone features at strides 8 / 16 / 32
+
+training:
+  max_steps: 1500
+  batch_size: 16
+  learning_rate: 1.0e-4     # AdamW
+  weight_decay: 1.0e-4
+  grad_clip_norm: 1.0
+  seed: 1337
+  log_every: 10
+  loss:
+    class_weight: 1.0       # background BCE on the per-query class logits
+    image_weight: 1.0       # image-level BCE on the image head (load-bearing)
+
+manifests:
+  train: data/my_dataset/train.jsonl
+  val: data/my_dataset/val.jsonl

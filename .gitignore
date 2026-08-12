@@ -1,0 +1,23 @@
+# Model artifacts — never commit weights or exports
+*.pt
+*.pth
+*.onnx
+*.engine
+*.safetensors
+checkpoints/
+runs/
+
+# Data — images and datasets are never committed
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+venv/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

@@ -1,0 +1,41 @@
+# Example: fine-tune the weak scout on a NEW production dataset, starting
+# from a previously trained checkpoint (see README.md section 5 for the full
+# step-by-step recipe, including the >=200-NOK supervision-budget guidance
+# and the calibration steps that follow training).
+#
+#   python -m selective_inspection.train \
+#       --config configs/finetune_example.yaml \
+#       --out runs/finetune_my_line
+#
+# `init_checkpoint` can also be passed on the CLI: --init-checkpoint path.pt
+# (the CLI flag overrides this file). When initializing from a checkpoint,
+# the `model:` block is ignored — the architecture comes from the checkpoint.
+
+init_checkpoint: checkpoints/scout_prior.pt   # <- your prior checkpoint
+
+model:                      # used only when init_checkpoint is absent
+  backbone: resnet18
+  pretrained: true
+  image_size: 256
+  feature_dim: 256
+  num_queries: 100
+  num_heads: 8
+  num_encoder_layers: 2
+  num_decoder_layers: 2
+  multi_scale: true
+
+training:
+  max_steps: 500            # shorter schedule: the backbone is already adapted
+  batch_size: 16
+  learning_rate: 5.0e-5     # lower LR for fine-tuning
+  weight_decay: 1.0e-4
+  grad_clip_norm: 1.0
+  seed: 1337
+  log_every: 10
+  loss:
+    class_weight: 1.0
+    image_weight: 1.0
+
+manifests:
+  train: data/my_line/train.jsonl   # disjoint from val and test (see README!)
+  val: data/my_line/val.jsonl       # the ONLY calibration surface
