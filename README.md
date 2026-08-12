@@ -3,6 +3,8 @@
 Companion code repository for the paper:
 
 > **Learning When Not to Inspect: Risk-Calibrated Weak Supervision for Efficient Industrial Visual Inspection**
+>
+> 📄 [Read the paper (PDF)](docs/paper.pdf)
 
 ## 1. What this is
 
