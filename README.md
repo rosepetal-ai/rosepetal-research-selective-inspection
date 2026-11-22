@@ -44,8 +44,8 @@ line without retraining (calibration is one validation pass).
 ## 2. Install
 
 ```bash
-git clone <this-repo>
-cd selective-inspection
+git clone https://github.com/rosepetal-ai/rosepetal-research-selective-inspection.git
+cd rosepetal-research-selective-inspection
 
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
@@ -132,7 +132,7 @@ python examples/make_dummy_dataset.py --out data/dummy
 ```
 
 generates a tiny synthetic OK/NOK dataset (train/val/test manifests included)
-so the whole chain runs end-to-end in minutes with no download.
+so the whole chain runs end-to-end in minutes with no dataset download.
 
 ## 4. Reproducing the paper's training
 
@@ -257,7 +257,8 @@ unchanged; report realised rates on the held-out test set once
 ## 6. Retraining commands (full worked examples)
 
 ```bash
-# 0) Smoke chain on synthetic data (no downloads, runs anywhere)
+# 0) Smoke chain on synthetic data (no dataset download; the first run fetches
+#    the ResNet-18 weights, add --no-pretrained to skip them)
 python examples/make_dummy_dataset.py --out data/dummy
 python -m selective_inspection.train --config configs/train_default.yaml \
     --train-manifest data/dummy/train.jsonl --val-manifest data/dummy/val.jsonl \
@@ -480,6 +481,18 @@ not the scout's.
 | ONNX scores differ from PyTorch beyond 1e-4 | Almost always preprocessing mismatch on the consumer side (interpolation mode, padding, normalization). Re-check against `data.preprocess`; then re-run `--verify-images`. |
 | `tau_reject = Infinity` / `certifiable: false` | Requested `alpha_reject` below the floor `1/(n_cal+1)`. Collect more OK calibration images or raise `alpha_reject`. |
 | Validation AUROC near 0.5 on a real dataset | Check the NOK budget first (≤50 NOK ≈ chance, ≥200 needed — paper §5.2) and the pool balance (§5.3) before blaming the architecture. |
+
+## Documentation
+
+| Page | Contents |
+|---|---|
+| [Overview](docs/index.md) | Installation, requirements, the full command chain, headline results |
+| [Data and training](docs/training.md) | Manifests and splits, the training recipe and options, NOK-label budget, fine-tuning |
+| [Calibration](docs/calibration.md) | Exit gate and conformal layer: rules, options, output files, production use |
+| [Inference and deployment](docs/inference.md) | PyTorch scoring, ONNX export and parity, the cascade API |
+| [Paper results](docs/results.md) | Every measurement of the paper with its protocol and limits |
+
+The same pages are published at <https://docs.rosepetal.ai/research/selective-inspection>.
 
 ## License
 
