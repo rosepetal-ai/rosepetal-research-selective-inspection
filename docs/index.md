@@ -63,7 +63,7 @@ The package is not installed with pip: run its tools from the repository root as
 
 ## Usage
 
-Every tool reads and writes JSONL files, so the steps below chain through files under `runs/`.
+The tools pass their results on as files (a checkpoint, JSONL scores, JSON thresholds), so the steps below chain through files under `runs/`.
 
 ### Data
 

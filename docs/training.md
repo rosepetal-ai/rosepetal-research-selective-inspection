@@ -10,7 +10,7 @@ The weak scout learns from image-level OK/NOK labels only. This page covers the 
 
 ## Manifests
 
-Every tool reads JSONL manifests: one JSON object per line, one image per object.
+The training, scoring and cascade tools read JSONL manifests: one JSON object per line, one image per object.
 
 ```json
 {"image_path": "images/train/part_0001.png", "label": "ok"}

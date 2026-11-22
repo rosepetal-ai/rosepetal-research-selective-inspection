@@ -10,7 +10,7 @@ Every number on this page comes from the paper ([PDF](./paper.pdf)); the section
 
 ## What this repository reproduces
 
-The code trains the weak scout with the paper's recipe, calibrates the exit gate and the decision layer with the paper's rules, and reports the same exit and decision-layer rates on your own splits. The repository does not include the paper's split manifests, trained checkpoints, the inspector used for the end-to-end measurements, the baselines (YOLO11 classifiers, PatchCore, RF-DETR-S) or the latency harness, so the end-to-end and latency figures below cannot be reproduced with it alone.
+The code trains the weak scout with the paper's recipe, calibrates the exit gate and the decision layer with the paper's rules, and reports the same exit and decision-layer rates on your own splits. The repository does not include the paper's split manifests, trained checkpoints, the inspector used for the end-to-end measurements, the baselines (YOLO11 classifiers, PatchCore), the external RF-DETR-S detector or the latency harness, so the end-to-end and latency figures below cannot be reproduced with it alone.
 
 ## Protocol
 
